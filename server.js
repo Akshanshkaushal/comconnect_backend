@@ -24,6 +24,10 @@ const password = process.env.DB_PASSWORD;
 
 Connection(username, password);
 
+app.get('/', (req, res) => {
+  res.send('Welcome to the API');
+});
+
 app.use("/api/user", userRoutes);
 app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
