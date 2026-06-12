@@ -14,7 +14,12 @@ const cors = require("cors");
 dotenv.config();
 
 const app = express();
-app.use(cors());
+app.use(
+cors({
+origin: "*",
+methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+})
+);
 app.use(express.json()); // to accept json data
 
 // Connect to database
@@ -44,11 +49,13 @@ const server = app.listen(
 );
 
 const io = require("socket.io")(server, {
-  pingTimeout: 60000,
-  cors: { 
-    // credentials: true,
-  },
+pingTimeout: 60000,
+cors: {
+origin: "*",
+methods: ["GET", "POST"],
+},
 });
+
 
 io.on("connection", (socket) => {
   console.log("Connected to socket.io");
