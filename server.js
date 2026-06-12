@@ -7,6 +7,7 @@ const chatRoutes = require("./routes/chatRoutes");
 const messageRoutes = require("./routes/messageRoutes");
 const workspaceRoutes = require("./routes/workspaceRoutes");
 const taskRoutes = require("./routes/taskAllocatorRoutes.js");
+const aiRoutes = require("./routes/aiRoutes");
 
 const { notFound, errorHandler } = require("./middleware/errorMiddleware");
 const Connection = require("./config/db");
@@ -42,6 +43,7 @@ app.use("/api/chat", chatRoutes);
 app.use("/api/message", messageRoutes);
 app.use("/api/workspace", workspaceRoutes);
 app.use("/api/tasks", taskRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

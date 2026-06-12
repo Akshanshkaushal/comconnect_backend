@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const Message = require("../models/messageModel");
 const User = require("../models/userModel");
 const Chat = require("../models/chatModel");
+const { extractTags, normalizeTags } = require("../services/tagService");
 
 //@description     Get all Messages
 //@route           GET /api/Message/:chatId
@@ -22,7 +23,7 @@ const allMessages = asyncHandler(async (req, res) => {
 //@route           POST /api/Message/
 //@access          Protected
 const sendMessage = asyncHandler(async (req, res) => {
-  const { content, chatId } = req.body;
+  const { content, chatId, tags } = req.body;
 
   if (!content || !chatId) {
     console.log("Invalid data passed into request", req.body);
@@ -33,6 +34,10 @@ const sendMessage = asyncHandler(async (req, res) => {
     sender: req.user._id,
     content: content,
     chat: chatId,
+    tags: normalizeTags([
+      ...normalizeTags(tags),
+      ...extractTags(content),
+    ]),
   };
 
   try {
